@@ -1,3 +1,5 @@
+from this import d
+
 import pygame
 from constants import  SCREEN_HEIGHT, SCREEN_WIDTH
 from logger import log_state
@@ -9,17 +11,22 @@ def main():
     clock = pygame.time.Clock()
     dt = 0.0
 
-    hero = Player(x = SCREEN_WIDTH/2, y = SCREEN_HEIGHT/2)
 
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+    Player.containers = (updatable, drawable)
+
+    hero = Player(x = SCREEN_WIDTH/2, y = SCREEN_HEIGHT/2)
 
     while True:
         log_state()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
-        hero.update(dt)
+        updatable.update(dt)
         screen.fill(color="Black")
-        hero.draw(screen)
+        for sprite in drawable:
+            sprite.draw(screen)
         pygame.display.flip()
         dt = clock.tick(60)/ 1000
 
