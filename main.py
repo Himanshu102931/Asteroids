@@ -11,11 +11,13 @@ def main():
 
     hero = Player(x = SCREEN_WIDTH/2, y = SCREEN_HEIGHT/2)
 
+
     while True:
         log_state()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
+        hero.update(dt)
         screen.fill(color="Black")
         hero.draw(screen)
         pygame.display.flip()
