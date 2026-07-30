@@ -2,8 +2,10 @@ from asteroidfield import AsteroidField
 from asteroid import Asteroid
 import pygame
 from constants import  SCREEN_HEIGHT, SCREEN_WIDTH
-from logger import log_state
+from logger import log_state, log_event
 from player import Player
+from circleshape import CircleShape
+import sys
 
 def main():
     pygame.init()
@@ -30,6 +32,13 @@ def main():
             if event.type == pygame.QUIT:
                 return
         updatable.update(dt)
+
+        for asteroid in asteroids:
+            if asteroid.collides_with(hero):
+                log_event("player_hit")
+                print("Game over!")
+                sys.exit()
+
         screen.fill(color="Black")
         for sprite in drawable:
             sprite.draw(screen)
